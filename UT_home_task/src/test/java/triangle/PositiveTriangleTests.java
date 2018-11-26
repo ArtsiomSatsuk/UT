@@ -24,22 +24,19 @@ public class PositiveTriangleTests {
                 {new ArrayList<>(Arrays.asList(75.0, 55.0, 100.0)), 4},  //обычный
                 {new ArrayList<>(Arrays.asList(100.0, 75.0, 55.0)), 4},  //обычный
                 {new ArrayList<>(Arrays.asList(55.0, 100.0, 75.0)), 4},  //обычный
-                {new ArrayList<>(Arrays.asList(Math.sqrt(3.99999999999999999998), Math.sqrt(4.000000000000000000001), Math.sqrt(3.99999999999999999999))), 4},   //обычный треунгольник с разными сторонами
-                {new ArrayList<>(Arrays.asList(Math.sqrt(4.000000000000000000001), Math.sqrt(3.99999999999999999998), Math.sqrt(3.99999999999999999999))), 4},   //обычный треунгольник с разными сторонами
-                {new ArrayList<>(Arrays.asList(Math.sqrt(3.99999999999999999998), Math.sqrt(3.99999999999999999999), Math.sqrt(4.000000000000000000001))), 4},   //обычный треунгольник с разными сторонами
-                {new ArrayList<>(Arrays.asList(Math.sqrt(3.99999999999999999999), Math.sqrt(4.000000000000000000001), Math.sqrt(3.99999999999999999998))), 4},   //обычный треунгольник с разными сторонами
+//                {new ArrayList<>(Arrays.asList(Math.sqrt(3.99999999999999999998), Math.sqrt(4.000000000000000000001), Math.sqrt(3.99999999999999999999))), 4},   //обычный треунгольник с разными сторонами
+//                {new ArrayList<>(Arrays.asList(Math.sqrt(4.000000000000000000001), Math.sqrt(3.99999999999999999998), Math.sqrt(3.99999999999999999999))), 4},   //обычный треунгольник с разными сторонами
+//                {new ArrayList<>(Arrays.asList(Math.sqrt(3.99999999999999999998), Math.sqrt(3.99999999999999999999), Math.sqrt(4.000000000000000000001))), 4},   //обычный треунгольник с разными сторонами
+//                {new ArrayList<>(Arrays.asList(Math.sqrt(3.99999999999999999999), Math.sqrt(4.000000000000000000001), Math.sqrt(3.99999999999999999998))), 4},   //обычный треунгольник с разными сторонами
                 {new ArrayList<>(Arrays.asList(3.0, 4.0, 5.0)), 8},  //прямоугольный
                 {new ArrayList<>(Arrays.asList(3.0, 5.0, 4.0)), 8},  //прямоугольный
                 {new ArrayList<>(Arrays.asList(5.0, 3.0, 4.0)), 8},  //прямоугольный
                 {new ArrayList<>(Arrays.asList(4.0, 5.0, 3.0)), 8},  //прямоугольный
-                {new ArrayList<>(Arrays.asList(Double.MAX_VALUE / 2, Double.MAX_VALUE / 2, (Double.MAX_VALUE / 2) - 1)), 2},  //равнобедренный
-                {new ArrayList<>(Arrays.asList(Double.MAX_VALUE / 2, (Double.MAX_VALUE / 2) - 1, Double.MAX_VALUE / 2)), 2},  //равнобедренный
-                {new ArrayList<>(Arrays.asList((Double.MAX_VALUE / 2) - 1, Double.MAX_VALUE / 2, Double.MAX_VALUE / 2)), 2},  //равнобедренный
                 {new ArrayList<>(Arrays.asList(2.8284271247461900976, 2.0, 2.0)), 8 + 2},  //прямоугольный и равнобедренный
                 {new ArrayList<>(Arrays.asList(2.0, 2.8284271247461900976, 2.0)), 8 + 2},  //прямоугольный и равнобедренный
                 {new ArrayList<>(Arrays.asList(2.0, 2.0, 2.8284271247461900976)), 8 + 2},  //прямоугольный и равнобедренный
-                {new ArrayList<>(Arrays.asList(Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE)), 1 + 2},  //равносторонний
-                {new ArrayList<>(Arrays.asList(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE)), 1 + 2},  //равносторонний
+                {new ArrayList<>(Arrays.asList(Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE)), 1 + 2},  //равносторонний и равнобедренный
+                {new ArrayList<>(Arrays.asList(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE)), 1 + 2},  //равносторонний и равнобедренный
                 {new ArrayList<>(Arrays.asList(Double.MAX_VALUE - Double.MIN_VALUE, Double.MAX_VALUE, Double.MAX_VALUE)), 2},  //равнобедренный
                 {new ArrayList<>(Arrays.asList(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE - Double.MIN_VALUE)), 2},  //равнобедренный
                 {new ArrayList<>(Arrays.asList(Double.MAX_VALUE, Double.MAX_VALUE - Double.MIN_VALUE, Double.MAX_VALUE)), 2},  //равнобедренный
@@ -89,7 +86,7 @@ public class PositiveTriangleTests {
         triangle.checkTriangle();
         assertEquals(triangle.getMessage(), "", "method 'checkTriangle' returned wrong string message with " + parameters + " as sides;");
     }
-
+//
     @DataProvider(name = "for_checkGetSquareReturnValue")
     public Object[][] createDataForCheckGetSquareReturnValue() {
         return new Object[][]{
