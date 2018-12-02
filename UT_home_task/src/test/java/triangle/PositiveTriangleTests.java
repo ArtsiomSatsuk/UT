@@ -6,115 +6,105 @@ import org.testng.annotations.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class PositiveTriangleTests {
 
-    @DataProvider(name = "PositiveValues")
-    public Object[][] createPositiveData() {
+    @DataProvider(name = "verifyDetectTrianglePositiveTests")
+    public Object[][] createPositiveTestsForVerifyDetectTriangle() {
         return new Object[][]{
-                {new ArrayList<>(Arrays.asList(1.0, 1.0, 1.0)), 1 + 2}, //равносторонный и равнобедренный
-                {new ArrayList<>(Arrays.asList(3.5, 3.5, 4.5)), 2}, //равнобедренный
-                {new ArrayList<>(Arrays.asList(4.5, 3.5, 3.5)), 2},  //равнобедренный
-                {new ArrayList<>(Arrays.asList(3.5, 4.5, 4.5)), 2}, //равнобедренный
-                {new ArrayList<>(Arrays.asList(0.1 + 0.2, 0.3, 0.3)), 1 + 2},  //равносторонный и равнобедренный
-                {new ArrayList<>(Arrays.asList(0.3, 0.3, 0.1 + 0.2)), 1 + 2},  //равносторонный и равнобедренный
-                {new ArrayList<>(Arrays.asList(0.3, 0.1 + 0.2, 0.3)), 1 + 2},  //равносторонный и равнобедренный
-                {new ArrayList<>(Arrays.asList(55.0, 75.0, 100.0)), 4},  //обычный
-                {new ArrayList<>(Arrays.asList(75.0, 55.0, 100.0)), 4},  //обычный
-                {new ArrayList<>(Arrays.asList(100.0, 75.0, 55.0)), 4},  //обычный
-                {new ArrayList<>(Arrays.asList(55.0, 100.0, 75.0)), 4},  //обычный
-//                {new ArrayList<>(Arrays.asList(Math.sqrt(3.99999999999999999998), Math.sqrt(4.000000000000000000001), Math.sqrt(3.99999999999999999999))), 4},   //обычный треунгольник с разными сторонами
-//                {new ArrayList<>(Arrays.asList(Math.sqrt(4.000000000000000000001), Math.sqrt(3.99999999999999999998), Math.sqrt(3.99999999999999999999))), 4},   //обычный треунгольник с разными сторонами
-//                {new ArrayList<>(Arrays.asList(Math.sqrt(3.99999999999999999998), Math.sqrt(3.99999999999999999999), Math.sqrt(4.000000000000000000001))), 4},   //обычный треунгольник с разными сторонами
-//                {new ArrayList<>(Arrays.asList(Math.sqrt(3.99999999999999999999), Math.sqrt(4.000000000000000000001), Math.sqrt(3.99999999999999999998))), 4},   //обычный треунгольник с разными сторонами
-                {new ArrayList<>(Arrays.asList(3.0, 4.0, 5.0)), 8},  //прямоугольный
-                {new ArrayList<>(Arrays.asList(3.0, 5.0, 4.0)), 8},  //прямоугольный
-                {new ArrayList<>(Arrays.asList(5.0, 3.0, 4.0)), 8},  //прямоугольный
-                {new ArrayList<>(Arrays.asList(4.0, 5.0, 3.0)), 8},  //прямоугольный
-                {new ArrayList<>(Arrays.asList(2.8284271247461900976, 2.0, 2.0)), 8 + 2},  //прямоугольный и равнобедренный
-                {new ArrayList<>(Arrays.asList(2.0, 2.8284271247461900976, 2.0)), 8 + 2},  //прямоугольный и равнобедренный
-                {new ArrayList<>(Arrays.asList(2.0, 2.0, 2.8284271247461900976)), 8 + 2},  //прямоугольный и равнобедренный
-                {new ArrayList<>(Arrays.asList(Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE)), 1 + 2},  //равносторонний и равнобедренный
-                {new ArrayList<>(Arrays.asList(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE)), 1 + 2},  //равносторонний и равнобедренный
-                {new ArrayList<>(Arrays.asList(Double.MAX_VALUE - Double.MIN_VALUE, Double.MAX_VALUE, Double.MAX_VALUE)), 2},  //равнобедренный
-                {new ArrayList<>(Arrays.asList(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE - Double.MIN_VALUE)), 2},  //равнобедренный
-                {new ArrayList<>(Arrays.asList(Double.MAX_VALUE, Double.MAX_VALUE - Double.MIN_VALUE, Double.MAX_VALUE)), 2},  //равнобедренный
+                {new ArrayList<>(Arrays.asList(1.0, 1.0, 1.0)), 1 + 2}, //equilateral and isosceles
+                {new ArrayList<>(Arrays.asList(4.5, 3.5, 3.5)), 2}, //isosceles
+                {new ArrayList<>(Arrays.asList(3.5, 4.5, 4.5)), 2}, //isosceles
+                {new ArrayList<>(Arrays.asList(3.5, 3.5, 4.5)), 2}, //isosceles
+                {new ArrayList<>(Arrays.asList(0.1 + 0.2, 0.3, 0.3)), 1 + 2},  //equilateral and isosceles
+                {new ArrayList<>(Arrays.asList(0.3, 0.1 + 0.2, 0.3)), 1 + 2},  //equilateral and isosceles
+                {new ArrayList<>(Arrays.asList(0.3, 0.3, 0.1 + 0.2)), 1 + 2},  //equilateral and isosceles
+                {new ArrayList<>(Arrays.asList(55.0, 75.0, 100.0)), 4},  //ordinary
+                {new ArrayList<>(Arrays.asList(75.0, 55.0, 100.0)), 4},  //ordinary
+                {new ArrayList<>(Arrays.asList(100.0, 75.0, 55.0)), 4},  //ordinary
+                {new ArrayList<>(Arrays.asList(55.0, 100.0, 75.0)), 4},  //ordinary
+                {new ArrayList<>(Arrays.asList(3.0, 4.0, 5.0)), 8},  //rectangular
+                {new ArrayList<>(Arrays.asList(3.0, 5.0, 4.0)), 8},  //rectangular
+                {new ArrayList<>(Arrays.asList(5.0, 3.0, 4.0)), 8},  //rectangular
+                {new ArrayList<>(Arrays.asList(4.0, 5.0, 3.0)), 8},  //rectangular
+                {new ArrayList<>(Arrays.asList(2.8284271247461900976, 2.0, 2.0)), 8 + 2},  //rectangular and isosceles
+                {new ArrayList<>(Arrays.asList(2.0, 2.8284271247461900976, 2.0)), 8 + 2},  //rectangular and isosceles
+                {new ArrayList<>(Arrays.asList(2.0, 2.0, 2.8284271247461900976)), 8 + 2},  //rectangular and isosceles
+                {new ArrayList<>(Arrays.asList(Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE)), 1 + 2},  //equilateral and isosceles
+                {new ArrayList<>(Arrays.asList(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE)), 1 + 2},  //equilateral and isosceles
+                {new ArrayList<>(Arrays.asList(Double.MAX_VALUE - Double.MIN_VALUE, Double.MAX_VALUE, Double.MAX_VALUE)), 2},  //isosceles
+                {new ArrayList<>(Arrays.asList(Double.MAX_VALUE, Double.MAX_VALUE - Double.MIN_VALUE, Double.MAX_VALUE)), 2},  //isosceles
+                {new ArrayList<>(Arrays.asList(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE - Double.MIN_VALUE)), 2},  //isosceles
         };
     }
 
-    @Test(dataProvider = "PositiveValues")
-    public void verifyDetectTriangleReturnedValue(ArrayList<Double> parameters, int expected) {
-        Triangle triangle = new Triangle(parameters.get(0), parameters.get(1), parameters.get(2));
-        assertEquals(triangle.detectTriangle(), expected, "method 'detectTriangle' returned wrong final state of triangle with: " + parameters + " as sides;");
-    }
-
-    @DataProvider(name = "checkTrianglePositiveGroup")
-    public Object[][] createDataForCheckTrianglePositiveGroup() {
+    @DataProvider(name = "verifyCheckTrianglePositiveTests")
+    public Object[][] createPositiveTestsForVerifyCheckTriangle() {
         return new Object[][]{
                 {new ArrayList<>(Arrays.asList(1.0, 1.0, 1.0))},
-                {new ArrayList<>(Arrays.asList(3.5, 3.5, 4.5))},
                 {new ArrayList<>(Arrays.asList(4.5, 3.5, 3.5))},
                 {new ArrayList<>(Arrays.asList(3.5, 4.5, 4.5))},
+                {new ArrayList<>(Arrays.asList(3.5, 3.5, 4.5))},
                 {new ArrayList<>(Arrays.asList(55.0, 75.0, 100.0))},
                 {new ArrayList<>(Arrays.asList(75.0, 55.0, 100.0))},
                 {new ArrayList<>(Arrays.asList(100.0, 75.0, 55.0))},
                 {new ArrayList<>(Arrays.asList(55.0, 100.0, 75.0))},
-                {new ArrayList<>(Arrays.asList(0.1 + 0.2, 0.15000000000000002, 0.15000000000000002))},
-                {new ArrayList<>(Arrays.asList(0.15000000000000002, 0.15000000000000002, 0.1 + 0.2))},
-                {new ArrayList<>(Arrays.asList(0.15000000000000002, 0.1 + 0.2, 0.15000000000000002))},
-                {new ArrayList<>(Arrays.asList(Double.MAX_VALUE / 2, Double.MAX_VALUE / 2, Double.MAX_VALUE - Double.MIN_VALUE))},
-                {new ArrayList<>(Arrays.asList(Double.MAX_VALUE / 2, Double.MAX_VALUE - Double.MIN_VALUE, Double.MAX_VALUE / 2))},
                 {new ArrayList<>(Arrays.asList(Double.MAX_VALUE - Double.MIN_VALUE, Double.MAX_VALUE / 2, Double.MAX_VALUE / 2))},
-                {new ArrayList<>(Arrays.asList(Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE))},
-                {new ArrayList<>(Arrays.asList(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE))},
+                {new ArrayList<>(Arrays.asList(Double.MAX_VALUE / 2, Double.MAX_VALUE - Double.MIN_VALUE, Double.MAX_VALUE / 2))},
+                {new ArrayList<>(Arrays.asList(Double.MAX_VALUE / 2, Double.MAX_VALUE / 2, Double.MAX_VALUE - Double.MIN_VALUE))},
                 {new ArrayList<>(Arrays.asList(Double.MIN_VALUE, Double.MAX_VALUE, Double.MAX_VALUE))},
-                {new ArrayList<>(Arrays.asList(Double.MAX_VALUE, Double.MAX_VALUE, Double.MIN_VALUE))},
                 {new ArrayList<>(Arrays.asList(Double.MAX_VALUE, Double.MIN_VALUE, Double.MAX_VALUE))},
+                {new ArrayList<>(Arrays.asList(Double.MAX_VALUE, Double.MAX_VALUE, Double.MIN_VALUE))},
+                {new ArrayList<>(Arrays.asList(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE))},
+                {new ArrayList<>(Arrays.asList(Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE))},
         };
     }
 
-    @Test(dataProvider = "checkTrianglePositiveGroup", groups = "checkTrianglePositive")
-    public void verifyCheckTriangleReturnedBoolean(ArrayList<Double> parameters) {
-        Triangle triangle = new Triangle(parameters.get(0), parameters.get(1), parameters.get(2));
-        assertTrue(triangle.checkTriangle(), "method 'checkTriangle' returned wrong boolean value with " + parameters + " as sides;");
-    }
-
-    @Test(dataProvider = "checkTrianglePositiveGroup", groups = "checkTrianglePositive")
-    public void verifyCheckTriangleReturnedMessage(ArrayList<Double> parameters) {
-        Triangle triangle = new Triangle(parameters.get(0), parameters.get(1), parameters.get(2));
-        triangle.checkTriangle();
-        assertEquals(triangle.getMessage(), "", "method 'checkTriangle' returned wrong string message with " + parameters + " as sides;");
-    }
-//
-    @DataProvider(name = "for_checkGetSquareReturnValue")
-    public Object[][] createDataForCheckGetSquareReturnValue() {
+    @DataProvider(name = "verifyGetSquarePositiveTests")
+    public Object[][] createPositiveTestsForVerifyGetSquare() {
         return new Object[][]{
                 {new ArrayList<>(Arrays.asList(1.0, 1.0, 1.0)), 0.43301270189221932338},
-//                {new ArrayList<>(Arrays.asList(3.5, 3.5, 4.5)), 6.032140478304529672},
-//                {new ArrayList<>(Arrays.asList(4.5, 3.5, 3.5)), 6.032140478304529672},
-//                {new ArrayList<>(Arrays.asList(3.5, 4.5, 3.5)), 6.032140478304529672},
-                {new ArrayList<>(Arrays.asList(0.1 + 0.2, 0.3, 0.3)), 0.038971143170299739},
-                {new ArrayList<>(Arrays.asList(0.3, 0.3, 0.1 + 0.2)), 0.038971143170299739},
-                {new ArrayList<>(Arrays.asList(0.3, 0.1 + 0.2, 0.3)), 0.038971143170299739},
-                {new ArrayList<>(Arrays.asList(55.0, 75.0, 100.0)), 2034.698994937580441719366},
-                {new ArrayList<>(Arrays.asList(75.0, 55.0, 100.0)), 2034.698994937580441719366},
-                {new ArrayList<>(Arrays.asList(100.0, 75.0, 55.0)), 2034.698994937580441719366},
-                {new ArrayList<>(Arrays.asList(55.0, 100.0, 75.0)), 2034.698994937580441719366},
                 {new ArrayList<>(Arrays.asList(3.0, 4.0, 5.0)), 6.0},
                 {new ArrayList<>(Arrays.asList(3.0, 5.0, 4.0)), 6.0},
                 {new ArrayList<>(Arrays.asList(5.0, 3.0, 4.0)), 6.0},
-                {new ArrayList<>(Arrays.asList(4.0, 5.0, 3.0)), 6.0}
-
-//            проверить шестнадцатиричную, востмеричную и двоичные записи
-
+                {new ArrayList<>(Arrays.asList(4.0, 5.0, 3.0)), 6.0},
+                {new ArrayList<>(Arrays.asList(8.0, 7.0, 7.0)), 22.9782505861521146},
+                {new ArrayList<>(Arrays.asList(7.0, 8.0, 7.0)), 22.9782505861521146},
+                {new ArrayList<>(Arrays.asList(7.0, 7.0, 8.0)), 22.9782505861521146},
         };
     }
 
+    @Test(testName = "VerificationDetectTriangleReturnedValue", dataProvider = "verifyDetectTrianglePositiveTests")
+    public void verifyDetectTriangleReturnedValue(ArrayList<Double> sides, int expectedFinalState) {
+        Triangle triangle = new Triangle(sides.get(0), sides.get(1), sides.get(2));
+        assertEquals(triangle.detectTriangle(), expectedFinalState, "method 'detectTriangle' returned wrong final state of triangle, sides: " + sides);
+    }
 
-    @Test(dataProvider = "for_checkGetSquareReturnValue")
-    public void checkGetSquareReturnValue(ArrayList<Double> parameters, double expected) {
-        Triangle triangle = new Triangle(parameters.get(0), parameters.get(1), parameters.get(2));
-        assertEquals(triangle.getSquare(), expected, "method \'getSquare\' returned wrong result with " + parameters + " as sides;");
+    @Test(testName = "VerificationCheckTriangleReturnedBoolean", dataProvider = "verifyCheckTrianglePositiveTests")
+    public void verifyCheckTriangleReturnedBoolean(ArrayList<Double> sides) {
+        Triangle triangle = new Triangle(sides.get(0), sides.get(1), sides.get(2));
+        assertTrue(triangle.checkTriangle(), "method 'checkTriangle' returned wrong boolean value, sides: " + sides);
+    }
+
+
+    /*
+    String excpected = "", because all triangles with sides from the DataProvider("verifyCheckTrianglePositiveTests")
+    can exist and 'getMessage' method must always return empty string after invoking 'checkTriangle' method
+    */
+
+    @Test(testName = "VerificationCheckTriangleReturnedMessage", dataProvider = "verifyCheckTrianglePositiveTests")
+    public void verifyCheckTriangleReturnedMessage(ArrayList<Double> sides) {
+        String excpected = "";
+        Triangle triangle = new Triangle(sides.get(0), sides.get(1), sides.get(2));
+        triangle.checkTriangle();
+        assertEquals(triangle.getMessage(), excpected, "method 'checkTriangle' returned wrong string message, sides: " + sides);
+    }
+
+    @Test(testName = "VerificationGetSquareReturnedValue", dataProvider = "verifyGetSquarePositiveTests")
+    public void verifyGetSquareReturnedValue(ArrayList<Double> sides, double expected) {
+        Triangle triangle = new Triangle(sides.get(0), sides.get(1), sides.get(2));
+        assertEquals(triangle.getSquare(), expected, "method 'getSquare' returned wrong result, sides: " + sides);
     }
 }
